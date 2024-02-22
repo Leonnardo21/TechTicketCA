@@ -1,4 +1,6 @@
 using TechTicket.Blazor.Components;
+using TechTicket.CrossCutting.DependenciesApp;
+using TechTicket.Infrastructure.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,7 +8,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+builder.Services.AddInfrastructure(builder.Configuration);
+
 var app = builder.Build();
+
+CreateDatabase(app);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -25,3 +31,10 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
 app.Run();
+
+static void CreateDatabase(WebApplication app)
+{
+    var serviceScope = app.Services.CreateScope();
+    var dataContext = serviceScope.ServiceProvider.GetService<TechTicketDbContext>();
+    dataContext?.Database.EnsureCreated();
+}

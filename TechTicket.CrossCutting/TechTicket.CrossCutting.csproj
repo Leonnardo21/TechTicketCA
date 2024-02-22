@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TechTicket.Application\TechTicket.Application.csproj" />
+    <ProjectReference Include="..\TechTicket.Domain\TechTicket.Domain.csproj" />
+    <ProjectReference Include="..\TechTicket.Infrastructure\TechTicket.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
